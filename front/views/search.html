@@ -1,0 +1,38 @@
+<form id="searchform" class="form-horizontal">
+    <div class="form-group">
+        <div class="col-sm-9">
+            <input type="text" class="form-control input-lg" name="title" placeholder="Book title" ng-model="srch.title">
+        </div>
+        <div class="col-sm-3">
+            <button type="submit" id="search" class="btn btn-success btn-lg btn-block" ng-click="srch.getBooks()">Search</button>
+        </div>
+    </div>
+</form>
+
+<div class="alert alert-warning search-err" role="alert" ng-if="srch.errMsg" ng-cloak>
+    <a href="" class="close" onclick="$('.search-err').hide()" aria-label="close">&times;</a> {{srch.errMsg}}
+</div>
+
+<div id="booksContainer" class="container-fluid">
+
+    <h1 ng-show="srch.searching" class="text-center" ng-cloak>
+        <span><i class="glyphicon glyphicon-refresh spinning"></i></span>
+    </h1>
+
+    <div class="row" ng-repeat="book in srch.books track by $index" ng-cloak>
+        <div class="col-sm-2">
+            <img class="img-responsive" ng-src="{{book.thumbnail}}">
+        </div>
+        <div class="col-sm-3">
+            <h4><strong> {{book.title}} </strong></h4>
+            <div><strong>Author: {{book.authors[0]}} </strong></div>
+            <button type="button" class="btn btn-primary butt" ng-click="">Add to my books</button>
+        </div>
+        <div class="col-sm-7">
+            <a ng-href="{{book.link}}" target="_blank">
+									{{book.description}}
+								</a>
+        </div>
+    </div>
+
+</div>

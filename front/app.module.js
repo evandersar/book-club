@@ -17,6 +17,14 @@
                 controller: 'AllController',
                 controllerAs: 'all'
             },
+            
+            {
+                name: 'search',
+                url: '/search',
+                templateUrl: 'front/views/search.html',
+                controller: 'SearchController',
+                controllerAs: 'srch'
+            },
 
         ];
 
