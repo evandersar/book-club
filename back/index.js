@@ -8,7 +8,7 @@ module.exports = function(app) {
 	var bookHandler = new BookHandler();
 	
 	app.route('/api/items')
-		//.post(pictureHandler.addPicture)
+		.post(bookHandler.searchBooks)
 		.get(bookHandler.getBooks);
 
 	app.use(function(req, res) {

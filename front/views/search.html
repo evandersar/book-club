@@ -1,10 +1,10 @@
 <form id="searchform" class="form-horizontal">
     <div class="form-group">
-        <div class="col-sm-9">
+        <div class="col-md-9">
             <input type="text" class="form-control input-lg" name="title" placeholder="Book title" ng-model="srch.title">
         </div>
-        <div class="col-sm-3">
-            <button type="submit" id="search" class="btn btn-success btn-lg btn-block" ng-click="srch.getBooks()">Search</button>
+        <div class="col-md-3">
+            <button type="submit" id="search" class="btn btn-success btn-lg btn-block" ng-click="srch.searchBook()">Search</button>
         </div>
     </div>
 </form>
@@ -19,19 +19,22 @@
         <span><i class="glyphicon glyphicon-refresh spinning"></i></span>
     </h1>
 
-    <div class="row" ng-repeat="book in srch.books track by $index" ng-cloak>
-        <div class="col-sm-2">
-            <img class="img-responsive" ng-src="{{book.thumbnail}}">
-        </div>
-        <div class="col-sm-3">
-            <h4><strong> {{book.title}} </strong></h4>
-            <div><strong>Author: {{book.authors[0]}} </strong></div>
-            <button type="button" class="btn btn-primary butt" ng-click="">Add to my books</button>
-        </div>
-        <div class="col-sm-7">
-            <a ng-href="{{book.link}}" target="_blank">
-									{{book.description}}
-								</a>
+    <div class="row" ng-cloak ng-if="srch.books[0]">
+        <div class="col-md-6" ng-repeat="book in srch.books track by $index">
+            <div class="row" ng-cloak>
+                <div class="col-md-4 h-192">
+                    <a ng-href="{{book.link}}" target="_blank">
+                <img class="img-responsive" ng-src="{{book.thumbnail || '/public/img/placeholder128.jpg'}}" on-error-src="/public/img/placeholder128.jpg">
+            </a>
+                </div>
+                <div class="col-md-8">
+                    <h4><strong><a ng-href="{{book.link}}" target="_blank"> {{book.title}} </a></strong></h4>
+                    <div><strong>Author: {{book.authors[0]}} </strong></div>
+                    <div>Publisher: {{book.publisher}}</div>
+                    <div>Date: {{book.publishedDate}}, pages: {{book.pageCount}}.</div><br/>
+                    <button type="button" class="btn btn-primary butt" ng-click="">Add to my books</button>
+                </div>
+            </div>
         </div>
     </div>
 

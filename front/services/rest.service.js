@@ -15,7 +15,8 @@
             }, {
                 "update": {
                     method: "PUT"
-                }
+                },
+                searchitem: { method: 'POST', isArray: true }
             }
         );
 
@@ -30,7 +31,8 @@
             getItems: getItems,
             updateItem: updateItem,
             deleteItemById: deleteItemById,
-            getMyItems: getMyItems
+            getMyItems: getMyItems,
+            searchItem: searchItem
         };
 
         function addItem(ItemObj, callback, errorCallback) {
@@ -85,6 +87,19 @@
         function getMyItems(userId, callback, errorCallback) {
             return MyItem.getmyitems({}, {
                     userId: userId
+                },
+                function(resp) {
+                    callback(resp);
+                },
+                function(err) {
+                    errorCallback(err);
+                }
+            );
+        }
+        
+        function searchItem(title, callback, errorCallback) {
+            return Item.searchitem({}, {
+                    title: title
                 },
                 function(resp) {
                     callback(resp);

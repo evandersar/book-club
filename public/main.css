@@ -42,3 +42,7 @@ body {
         -webkit-transform: rotate(360deg);
     }
 }
+
+.h-192{
+    height: 192px;
+}

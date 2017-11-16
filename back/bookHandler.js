@@ -20,6 +20,14 @@ function BookHandler() {
         
     };
     
+    this.searchBooks = function(req, res){
+        gbooks.search(req.body.title, function(err, results) {
+            if (err) res.status(500).send(err);
+            
+            res.json(results);
+        });
+    };
+    
 }
 
 module.exports = BookHandler;
