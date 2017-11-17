@@ -18,12 +18,16 @@
   "homepage": "https://github.com/evandersar/book-club#readme",
   "dependencies": {
     "@uirouter/angularjs": "^1.0.11",
+    "bcrypt": "^1.0.3",
     "body-parser": "^1.18.2",
     "dotenv": "^4.0.0",
     "express": "^4.16.2",
     "google-books-search": "^0.3.1",
+    "jwt-simple": "^0.5.1",
     "mongoose": "^4.13.2",
-    "morgan": "^1.9.0"
+    "morgan": "^1.9.0",
+    "passport": "^0.4.0",
+    "passport-jwt": "^3.0.1"
   },
   "devDependencies": {
     "nodemon": "^1.12.1"
