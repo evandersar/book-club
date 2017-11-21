@@ -8,9 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>BookClub</title>
-
+    
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link href="/public/main.css" rel="stylesheet" type="text/css">
+    <script src="https://use.fontawesome.com/fcf4ba838b.js"></script>
 </head>
 
 <body ng-controller="MainController as main">
@@ -32,6 +33,7 @@
 					<li><a ui-sref="my" ui-sref-active="active-route" ng-if="false">My books</a></li>
 					<li><a ui-sref="search" ui-sref-active="active-route">Search book</a></li>
 					<li><a ui-sref="user" ui-sref-active="active-route" ng-if="false">User settings</a></li>
+					<li><a ui-sref="login" ui-sref-active="active-route">Login / Sign up</a></li>
 				</ul>
 			</div>
 		</div>
@@ -52,10 +54,11 @@
 
     <script type="text/javascript" src="front/app.module.js"></script>
     <script type="text/javascript" src="front/services/rest.service.js"></script>
-    <!--<script type="text/javascript" src="front/services/auth.service.js"></script>-->
+    <script type="text/javascript" src="front/services/auth.service.js"></script>
     <script type="text/javascript" src="front/controllers/main.ctrl.js"></script>
     <script type="text/javascript" src="front/controllers/all.ctrl.js"></script>
     <script type="text/javascript" src="front/controllers/search.ctrl.js"></script>
+    <script type="text/javascript" src="front/controllers/login.ctrl.js"></script>
 </body>
 
 </html>

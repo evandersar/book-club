@@ -27,6 +27,7 @@ function UserHandler() {
     };
 
     this.authenticate = function(req, res) {
+        console.log("req.body => ", req.body);
         User.findOne({
             name: req.body.name
         }, function(err, user) {

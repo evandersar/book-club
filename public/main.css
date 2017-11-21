@@ -1,31 +1,32 @@
 body {
-	padding-top: 40px;
-	background-color: darkslategrey;
+    padding-top: 40px;
+    background-color: rgba(47, 79, 79, 0.85);
 }
 
 .row {
-	margin-top: 20px;
-	margin-bottom: 20px;
-	border: 1px solid #eee;
-	border-radius: 5px;
-	padding: 10px;
-	background-color: #eee;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: #eee;
 }
 
 .butt {
-	margin-top: 5px;
+    margin-top: 5px;
 }
 
-.alert{
-	margin-bottom: 0;
-	margin-top: 10px;
+.alert {
+    margin-bottom: 0;
+    margin-top: 10px;
 }
 
 .glyphicon.spinning {
-	font-size: 63px;
+    font-size: 63px;
     animation: spin 1s infinite linear;
     -webkit-animation: spin2 1s infinite linear;
 }
+
 @keyframes spin {
     from {
         transform: scale(1) rotate(0deg);
@@ -34,6 +35,7 @@ body {
         transform: scale(1) rotate(360deg);
     }
 }
+
 @-webkit-keyframes spin2 {
     from {
         -webkit-transform: rotate(0deg);
@@ -43,6 +45,10 @@ body {
     }
 }
 
-.h-192{
+.h-192 {
     height: 192px;
+}
+
+.fa{
+    font-size: 22px !important;
 }
