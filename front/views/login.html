@@ -1,20 +1,22 @@
-<form class="form-horizontal">
+<form name="lgn.loginForm" class="form-horizontal" novalidate>
     <div class="form-group">
         <label for="inputName" class="col-md-6 col-md-offset-3">NAME</label>
         <div class="col-md-6 col-md-offset-3">
-            <input type="text" class="form-control input-lg" id="inputName" placeholder="Your name" ng-model="lgn.user.name">
+            <input type="text" class="form-control input-lg" id="inputName" placeholder="Your name" name="name" ng-model="lgn.user.name" ng-required="true" 
+                ng-class="{'input-validation-error' : (!lgn.user.name && lgn.loginForm.name.$touched) || (!lgn.user.name && lgn.loginForm.$submitted)}">
         </div>
     </div>
 
     <div class="form-group">
         <label for="inputPassword" class="col-md-6 col-md-offset-3">PASSWORD</label>
         <div class="col-md-6 col-md-offset-3">
-            <input type="password" class="form-control input-lg" id="inputPassword" placeholder=" Your password" ng-model="lgn.user.password">
+            <input type="password" class="form-control input-lg" id="inputPassword" placeholder=" Your password" name="password" ng-model="lgn.user.password" ng-required="true" 
+                ng-class="{'input-validation-error' : (!lgn.user.password && lgn.loginForm.password.$touched) || (!lgn.user.password && lgn.loginForm.$submitted)}">
         </div>
     </div>
-    
+
     <br/>
-    
+
     <div class="form-group">
         <div class="col-md-offset-3 col-md-3">
             <button type="button" class="btn btn-success btn-block btn-lg" ng-click="lgn.login()">Login</button>
@@ -45,6 +47,14 @@
             <button type="submit" class="btn btn-default btn-block" style="background-color: #d34836;">
                 <i class="fa fa-google-plus" aria-hidden="true"></i>
             </button>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-3 col-md-6">
+            <div class="alert alert-warning search-err" role="alert" ng-if="lgn.errMsg" ng-cloak>
+                <a href="" class="close" onclick="$('.search-err').hide()" aria-label="close">&times;</a> {{lgn.errMsg}}
+            </div>
         </div>
     </div>
 </form>

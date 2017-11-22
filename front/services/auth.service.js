@@ -13,7 +13,7 @@
     AuthInterceptor.$inject = ["$rootScope", "$q", "AUTH_EVENTS"];
 
     function AuthService($q, $http, API_ENDPOINT) {
-        var LOCAL_TOKEN_KEY = 'yourTokenKey';
+        var LOCAL_TOKEN_KEY = 'userAuthToken';
         var isAuthenticated = false;
         var authToken;
 

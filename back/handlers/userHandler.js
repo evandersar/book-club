@@ -46,7 +46,7 @@ function UserHandler() {
                         res.json({ success: true, token: 'JWT ' + token });
                     }
                     else {
-                        res.send({ success: false, msg: 'Authentication failed. Wrong password.' });
+                        res.send({ success: false, msg: 'Authentication failed. Wrong Name or Password.' });
                     }
                 });
             }

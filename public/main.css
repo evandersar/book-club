@@ -52,3 +52,12 @@ body {
 .fa{
     font-size: 22px !important;
 }
+
+.nav > li {
+    cursor: pointer;
+}
+
+.input-validation-error {
+    border: 1px solid #a94442;
+    background-color: #f2dede;
+}

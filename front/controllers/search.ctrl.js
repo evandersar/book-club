@@ -17,6 +17,7 @@
         srch.searchBook = searchBook;
 
         function searchBook() {
+            srch.searchForm.$setSubmitted();
             srch.books = [];
             if (!srch.title) {
                 srch.errMsg = 'Please type book title';

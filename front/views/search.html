@@ -1,7 +1,8 @@
-<form id="searchform" class="form-horizontal">
+<form name="srch.searchForm" class="form-horizontal" novalidate>
     <div class="form-group">
         <div class="col-md-9">
-            <input type="text" class="form-control input-lg" name="title" placeholder="Book title" ng-model="srch.title">
+            <input type="text" class="form-control input-lg" name="title" placeholder="Book title" ng-model="srch.title" ng-required="true" 
+                ng-class="{'input-validation-error' : (!srch.title && srch.searchForm.title.$touched) || (!srch.title && srch.searchForm.$submitted)}">
         </div>
         <div class="col-md-3">
             <button type="submit" id="search" class="btn btn-success btn-lg btn-block" ng-click="srch.searchBook()">Search</button>

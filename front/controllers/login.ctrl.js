@@ -5,41 +5,60 @@
         .module('app')
         .controller('LoginController', LoginController);
 
-    LoginController.$inject = ["$state", "AuthService"];
+    LoginController.$inject = ["$state", "$rootScope", "AuthService"];
 
-    function LoginController($state, AuthService) {
+    function LoginController($state, $rootScope, AuthService) {
         var lgn = this;
 
+        lgn.errMsg = '';
         lgn.user = {
             name: '',
             password: ''
         };
+
         lgn.login = login;
         lgn.signup = signup;
 
         function login() {
-            console.log("lgn.user => ", lgn.user);
-            AuthService.login(lgn.user).then(
-                function(msg) {
-                    $state.go('search');
-                },
-                function(errMsg) {
-                    console.log(errMsg);
-                    alert(errMsg);
-                });
+            lgn.loginForm.$setSubmitted();
+            if (formIsValid()) {
+                AuthService.login(lgn.user).then(
+                    function(msg) {
+                        $state.go('search');
+                        $rootScope.$broadcast('logining', 'User logining');
+                    },
+                    function(errMsg) {
+                        console.log(errMsg);
+                        lgn.errMsg = errMsg;
+                    });
+            }
         }
-        
+
         function signup() {
-            AuthService.register(lgn.user).then(
-                function(msg) {
-                    lgn.user = {};
-                    console.log(msg);
-                    alert(msg);
-                },
-                function(errMsg) {
-                    console.log(errMsg);
-                    alert(errMsg);
-                });
+            lgn.loginForm.$setSubmitted();
+            if (formIsValid()) {
+                AuthService.register(lgn.user).then(
+                    function(msg) {
+                        lgn.user = {};
+                        console.log(msg);
+                        lgn.errMsg = msg;
+                    },
+                    function(errMsg) {
+                        console.log(errMsg);
+                        lgn.errMsg = errMsg;
+                    });
+            }
+        }
+
+        function formIsValid() {
+            lgn.errMsg = '';
+            
+            if (!lgn.loginForm.$valid) {
+                lgn.errMsg = 'All fields are required';
+                $(".search-err").show();
+            }
+
+            return lgn.loginForm.$valid;
         }
 
     }
