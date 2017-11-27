@@ -5,11 +5,8 @@ var mongoose = require('mongoose');
 var morgan = require('morgan');
 var bodyParser = require('body-parser');
 var passport = require('passport');
-//var jwt = require('jwt-simple');
 
 var routes = require('./back/index.js');
-//var config = require('./back/config/database'); // get db config file
-//var User = require('./back/models/user'); // get the mongoose model
 
 var app = express();
 require('dotenv').config();

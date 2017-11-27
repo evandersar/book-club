@@ -47,6 +47,12 @@
         var logout = function() {
             destroyUserCredentials();
         };
+        
+        var getPayload = function() {
+            var token = window.localStorage.getItem(LOCAL_TOKEN_KEY).split(' ')[1];
+            
+            return JSON.parse(atob(token.split('.')[1]));
+        };
 
         loadUserCredentials();
 
@@ -55,6 +61,7 @@
             register: register,
             logout: logout,
             isAuthenticated: function() { return isAuthenticated; },
+            getPayload: getPayload
         };
 
         function loadUserCredentials() {

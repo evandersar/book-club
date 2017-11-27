@@ -12,7 +12,26 @@ var UserSchema = new Schema({
     password: {
         type: String,
         required: true
-    }
+    },
+
+    city: String,
+    state: String,
+
+    tradeIn: [{
+        status: String,
+        title: String,
+        author: String,
+        clientId: String,
+        clientName: String
+    }],
+
+    tradeOut: [{
+        status: String,
+        title: String,
+        author: String,
+        ownerId: String,
+        ownerName: String
+    }]
 });
 
 UserSchema.pre('save', function(next) {

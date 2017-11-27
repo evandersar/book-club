@@ -36,7 +36,7 @@
         };
 
         function addItem(ItemObj, callback, errorCallback) {
-            return Item.save(
+            return MyItem.save(
                 ItemObj,
                 function(resp) {
                     callback(resp);

@@ -23,6 +23,9 @@ module.exports = function(app) {
 	app.route('/api/items')
 		.post(bookHandler.searchBooks)
 		.get(bookHandler.getBooks);
+		
+	app.route('/api/myitems')
+		.post(bookHandler.addBook);
 
 	app.use(function(req, res) {
 		res.sendFile(path + '/public/index.html');

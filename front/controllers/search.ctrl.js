@@ -5,9 +5,9 @@
         .module('app')
         .controller('SearchController', SearchController);
 
-    SearchController.$inject = ["restService"];
+    SearchController.$inject = ["restService", "AuthService", "$timeout"];
 
-    function SearchController(restService) {
+    function SearchController(restService, AuthService, $timeout) {
         var srch = this;
 
         srch.title = "";
@@ -15,6 +15,7 @@
         srch.searching = false;
         srch.books = [];
         srch.searchBook = searchBook;
+        srch.addBook = addBook;
 
         function searchBook() {
             srch.searchForm.$setSubmitted();
@@ -42,6 +43,39 @@
                 );
             }
         }
+
+        function addBook(book) {
+            srch.errMsg = "";
+            restService.addItem(
+                {
+                    googleId: book.id,
+                    title: book.title,
+                    link: book.link,
+                    thumbnail: book.thumbnail,
+                    author: book.authors[0],
+                    publisher: book.publisher,
+                    date: book.publishedDate,
+                    pages: book.pageCount,
+                    owner: AuthService.getPayload()["_id"]
+                },
+                function(resp) {
+                    console.log(`book saved with id: ${resp._id}`);
+                    //$state.go('my');
+                },
+                function(err) {
+                    console.log(err);
+                    if (err.data.code == 11000) {
+                        srch.errMsg = "You already have this book in your collection";
+                    }
+                    else{
+                        srch.errMsg = `${err.statusText} ${err.status}`;
+                    }
+                }
+            );
+
+            console.log(AuthService.getPayload());
+        }
+
     }
 
 

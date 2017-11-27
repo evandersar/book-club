@@ -40,6 +40,8 @@
                 AuthService.register(lgn.user).then(
                     function(msg) {
                         lgn.user = {};
+                        lgn.loginForm.$setPristine();
+                        lgn.loginForm.$setUntouched();
                         console.log(msg);
                         lgn.errMsg = msg;
                     },
