@@ -17,11 +17,11 @@ module.exports = function(app) {
 	app.route('/api/authenticate')
 		.post(userHandler.authenticate);
 		
-	app.route('/api/memberinfo')
-		.get(userHandler.memberinfo, passport.authenticate('jwt', { session: false}) );
+	app.route('/api/userinfo')
+		.get(userHandler.userinfo, passport.authenticate('jwt', { session: false}) );
 
 	app.route('/api/items')
-		.post(bookHandler.searchBooks)
+		.post(bookHandler.searchBooks, passport.authenticate('jwt', { session: false}))
 		.get(bookHandler.getBooks);
 		
 	app.route('/api/myitems')

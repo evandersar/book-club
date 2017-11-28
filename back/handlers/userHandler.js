@@ -53,7 +53,7 @@ function UserHandler() {
         });
     };
 
-    this.memberinfo = function(req, res) {
+    this.userinfo = function(req, res) {
         var token = getToken(req.headers);
         if (token) {
             var decoded = jwt.decode(token, config.secret);

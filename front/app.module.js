@@ -60,6 +60,14 @@
                 controller: 'LoginController',
                 controllerAs: 'lgn'
             },
+            
+            {
+                name: 'my',
+                url: '/my',
+                templateUrl: 'front/views/my.html',
+                controller: 'MyController',
+                controllerAs: 'my'
+            },
 
         ];
 

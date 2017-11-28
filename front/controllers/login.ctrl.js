@@ -24,7 +24,7 @@
             if (formIsValid()) {
                 AuthService.login(lgn.user).then(
                     function(msg) {
-                        $state.go('search');
+                        $state.go('all');
                         $rootScope.$broadcast('logining', 'User logining');
                     },
                     function(errMsg) {

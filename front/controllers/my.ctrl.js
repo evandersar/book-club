@@ -3,11 +3,11 @@
 
     angular
         .module('app')
-        .controller('AllController', AllController);
+        .controller('MyController', MyController);
 
-    AllController.$inject = ["restService", "AuthService", "$scope"];
+    MyController.$inject = ["restService", "AuthService", " $scope"];
 
-    function AllController(restService, AuthService,  $scope) {
+    function MyController(restService, AuthService,  $scope) {
         var all = this;
         
         all.books = [];

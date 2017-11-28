@@ -15,6 +15,7 @@
 
         function logout() {
             AuthService.logout();
+            $scope.$broadcast('logining', 'User logining');
             $state.go('all');
             main.authenticated = AuthService.isAuthenticated();
         }

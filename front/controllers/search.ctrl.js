@@ -5,9 +5,9 @@
         .module('app')
         .controller('SearchController', SearchController);
 
-    SearchController.$inject = ["restService", "AuthService", "$timeout"];
+    SearchController.$inject = ["restService", "AuthService"];
 
-    function SearchController(restService, AuthService, $timeout) {
+    function SearchController(restService, AuthService) {
         var srch = this;
 
         srch.title = "";
