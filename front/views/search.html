@@ -14,6 +14,10 @@
     <a href="" class="close" onclick="$('.search-err').hide()" aria-label="close">&times;</a> {{srch.errMsg}}
 </div>
 
+<div class="alert alert-success search-msg" role="alert" ng-if="srch.msg" ng-cloak>
+    <a href="" class="close" onclick="$('.search-msg').hide()" aria-label="close">&times;</a> <strong>{{srch.msg}}</strong> - sucessfully added to your books
+</div>
+
 <div id="booksContainer" class="container-fluid">
 
     <h1 ng-show="srch.searching" class="text-center" ng-cloak>

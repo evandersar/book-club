@@ -5,13 +5,14 @@
         .module('app')
         .controller('SearchController', SearchController);
 
-    SearchController.$inject = ["restService", "AuthService"];
+    SearchController.$inject = ["restService"];
 
-    function SearchController(restService, AuthService) {
+    function SearchController(restService) {
         var srch = this;
 
         srch.title = "";
         srch.errMsg = "";
+        srch.msg = "";
         srch.searching = false;
         srch.books = [];
         srch.searchBook = searchBook;
@@ -46,6 +47,7 @@
 
         function addBook(book) {
             srch.errMsg = "";
+            srch.msg = "";
             restService.addItem(
                 {
                     googleId: book.id,
@@ -55,12 +57,12 @@
                     author: book.authors[0],
                     publisher: book.publisher,
                     date: book.publishedDate,
-                    pages: book.pageCount,
-                    owner: AuthService.getPayload()["_id"]
+                    pages: book.pageCount
                 },
                 function(resp) {
-                    console.log(`book saved with id: ${resp._id}`);
+                    //console.log(`book saved with id: ${resp._id}`);
                     //$state.go('my');
+                    srch.msg = resp.title;
                 },
                 function(err) {
                     console.log(err);
@@ -73,7 +75,6 @@
                 }
             );
 
-            console.log(AuthService.getPayload());
         }
 
     }

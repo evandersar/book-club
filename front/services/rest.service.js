@@ -21,9 +21,7 @@
         );
 
         var MyItem = $resource(
-            '/api/myitems', {}, {
-                getmyitems: { method: 'POST', isArray: true }
-            }
+            '/api/myitems'
         );
 
         return {
@@ -84,10 +82,8 @@
             );
         }
 
-        function getMyItems(userId, callback, errorCallback) {
-            return MyItem.getmyitems({}, {
-                    userId: userId
-                },
+        function getMyItems(callback, errorCallback) {
+            return MyItem.query(
                 function(resp) {
                     callback(resp);
                 },

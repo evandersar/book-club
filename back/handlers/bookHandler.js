@@ -20,22 +20,10 @@ function BookHandler() {
     this.searchBooks = function(req, res) {
         var token = getToken(req.headers);
         if (token) {
-            var decoded = jwt.decode(token, config.secret);
-            User.findOne({
-                name: decoded.name
-            }, function(err, user) {
-                if (err) throw err;
+            gbooks.search(req.body.title, function(err, results) {
+                if (err) res.status(500).send(err);
 
-                if (!user) {
-                    return res.status(403).send({ success: false, msg: 'Authentication failed. User not found.' });
-                }
-                else {
-                    gbooks.search(req.body.title, function(err, results) {
-                        if (err) res.status(500).send(err);
-
-                        res.json(results);
-                    });
-                }
+                res.json(results);
             });
         }
         else {
@@ -44,16 +32,53 @@ function BookHandler() {
     };
 
     this.addBook = function(req, res) {
-        console.log("req.body => ", req.body);
+        //console.log("req.body => ", req.body);
+        var token = getToken(req.headers);
+        if (token) {
+            var decoded = jwt.decode(token, config.secret);
+            var newBook = new Book(req.body);
 
-        var newBook = new Book(req.body);
+            newBook.owner = decoded._id;
+            newBook.save((err, book) => {
+                if (err) res.status(500).send(err);
 
-        newBook.save((err, book) => {
-            if (err) res.status(500).send(err);
+                //console.log("Saved book: ", book);
+                res.json(book);
+            });
+        }
+        else {
+            return res.status(403).send({ success: false, msg: 'No token provided.' });
+        }
+    };
 
-            //console.log("Saved book: ", book);
-            res.json(book);
-        });
+    this.getMyBooks = function(req, res) {
+        var token = getToken(req.headers);
+        if (token) {
+            var decoded = jwt.decode(token, config.secret);
+            Book.find({ owner: decoded._id }, (err, books) => {
+                if (err) res.status(500).send(err);
+
+                res.json(books);
+            });
+        }
+        else {
+            return res.status(403).send({ success: false, msg: 'No token provided.' });
+        }
+    };
+
+    this.removeBook = function(req, res) {
+        var token = getToken(req.headers);
+        if (token) {
+            var bookId = req.params.id;
+            Book.findByIdAndRemove(bookId, (err, doc) => {
+                if (err) res.status(500).send(err);
+
+                res.json({ id: doc._id });
+            });
+        }
+        else {
+            return res.status(403).send({ success: false, msg: 'No token provided.' });
+        }
     };
 
     var getToken = function(headers) {

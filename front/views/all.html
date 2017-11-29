@@ -18,7 +18,7 @@
                     <div>Publisher: {{book.publisher}}</div>
                     <div>Date: {{book.date}}, pages: {{book.pages}}.</div><br/>
                     <button ng-if="all.user['_id'] != book.owner && all.authenticated" type="button" class="btn btn-warning butt" ng-click="">Request book</button>
-                    <button ng-if="all.user['_id'] == book.owner && all.authenticated" type="button" class="btn btn-danger butt" ng-click="">Delete book</button>
+                    <button ng-if="all.user['_id'] == book.owner && all.authenticated" type="button" class="btn btn-info butt" ui-sref="my">Your book</button>
                 </div>
             </div>
         </div>

@@ -5,37 +5,48 @@
         .module('app')
         .controller('MyController', MyController);
 
-    MyController.$inject = ["restService", "AuthService", " $scope"];
+    MyController.$inject = ["restService", "AuthService", "$scope"];
 
-    function MyController(restService, AuthService,  $scope) {
-        var all = this;
-        
-        all.books = [];
-        all.errMsg = '';
-        all.authenticated = AuthService.isAuthenticated();
-        all.user = all.authenticated ? AuthService.getPayload() : {};
-        all.getBooks = getBooks;
+    function MyController(restService, AuthService, $scope) {
+        var my = this;
 
-        function getBooks() {
-            all.errMsg = '';
-            restService.getItems(
+        my.books = [];
+        my.errMsg = '';
+        my.getMyBooks = getMyBooks;
+        my.removeBook = removeBook;
+
+        function getMyBooks() {
+            my.errMsg = '';
+            restService.getMyItems(
                 function(resp) {
-                    all.books = resp;
-                    console.log("all.books => ", all.books);
+                    my.books = resp;
+                    console.log("my.books => ", my.books);
                 },
                 function(err) {
                     console.log(err);
-                    all.errMsg = `${err.statusText} ${err.status}`;
+                    my.errMsg = `${err.statusText} ${err.status}`;
                 }
             );
         }
-        
-        getBooks();
-        
-        $scope.$on('logining', function(event, data) {
-            console.log(data);
-            all.authenticated = AuthService.isAuthenticated();
-        });
+
+        getMyBooks();
+
+        function removeBook(book_id, index) {
+            my.errMsg = '';
+            restService.deleteItemById(
+                book_id,
+                function(resp) {
+                    //console.log("resp => ", resp);
+                    //console.log(`Pic with id: ${resp._id} successfully removed`);
+                    my.books.splice(index, 1);
+                },
+                function(err) {
+                    console.log(err);
+                    my.errMsg = `${err.statusText} ${err.status}`;
+                }
+            );
+
+        }
 
     }
 

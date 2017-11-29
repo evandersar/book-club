@@ -1,0 +1,26 @@
+<div class="alert alert-warning search-err" role="alert" ng-if="my.errMsg" ng-cloak>
+    <a href="" class="close" onclick="$('.search-err').hide()" aria-label="close">&times;</a> {{my.errMsg}}
+</div>
+
+<div id="booksContainer" class="container-fluid">
+
+    <div class="row" ng-cloak ng-if="my.books[0]">
+        <div class="col-md-6" ng-repeat="book in my.books track by $index">
+            <div class="row" ng-cloak>
+                <div class="col-md-4 h-192">
+                    <a ng-href="{{book.link}}" target="_blank">
+                <img class="img-responsive" ng-src="{{book.thumbnail || '/public/img/placeholder128.jpg'}}" on-error-src="/public/img/placeholder128.jpg">
+            </a>
+                </div>
+                <div class="col-md-8">
+                    <h4><strong><a ng-href="{{book.link}}" target="_blank"> {{book.title}} </a></strong></h4>
+                    <div><strong>Author: {{book.author}} </strong></div>
+                    <div>Publisher: {{book.publisher}}</div>
+                    <div>Date: {{book.date}}, pages: {{book.pages}}.</div><br/>
+                    <button type="button" class="btn btn-danger butt" ng-click="my.removeBook(book._id, $index)">Delete book</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
