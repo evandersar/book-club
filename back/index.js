@@ -19,6 +19,9 @@ module.exports = function(app) {
 
 	app.route('/api/userinfo')
 		.get(userHandler.userinfo, passport.authenticate('jwt', { session: false }));
+		
+	app.route('/api/user/:id')
+		.put(userHandler.bookRequest, passport.authenticate('jwt', { session: false }));
 
 	app.route('/api/items')
 		.post(bookHandler.searchBooks, passport.authenticate('jwt', { session: false }))

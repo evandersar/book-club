@@ -18,18 +18,18 @@ var UserSchema = new Schema({
     state: String,
 
     tradeIn: [{
+        bookId: String,
         status: String,
         title: String,
         author: String,
-        clientId: String,
         clientName: String
     }],
 
     tradeOut: [{
+        bookId: String,
         status: String,
         title: String,
         author: String,
-        ownerId: String,
         ownerName: String
     }]
 });

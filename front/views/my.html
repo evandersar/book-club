@@ -2,7 +2,9 @@
     <a href="" class="close" onclick="$('.search-err').hide()" aria-label="close">&times;</a> {{my.errMsg}}
 </div>
 
-<div id="booksContainer" class="container-fluid">
+<div id="booksContainer" class="container-fluid" ng-cloak>
+
+    <h2 ng-if="!my.books[0]">No books in your collection, but you can <a ui-sref='search'>find</a> or <a ui-sref='all'>request</a> a new one</h2>
 
     <div class="row" ng-cloak ng-if="my.books[0]">
         <div class="col-md-6" ng-repeat="book in my.books track by $index">

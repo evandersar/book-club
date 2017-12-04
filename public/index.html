@@ -32,7 +32,7 @@
 					<li><a ui-sref="all" ui-sref-active="active-route">All books</a></li>
 					<li><a ui-sref="my" ui-sref-active="active-route" ng-if="main.authenticated">My books</a></li>
 					<li><a ui-sref="search" ui-sref-active="active-route" ng-if="main.authenticated">Search book</a></li>
-					<li><a ui-sref="user" ui-sref-active="active-route" ng-if="false">User settings</a></li>
+					<li><a ui-sref="profile" ui-sref-active="active-route" ng-if="main.authenticated">Profile</a></li>
 					<li><a ui-sref="login" ui-sref-active="active-route" ng-if="!main.authenticated" >Login / Sign up</a></li>
 					<li><a ng-click="main.logout()" ng-if="main.authenticated">Log out</a></li>
 				</ul>
@@ -40,7 +40,7 @@
 		</div>
 	</nav>
 
-    <div class="container" style="margin-top: 51px">
+    <div class="container" style="margin-top: 21px">
         <ui-view>
             <i>App is loading...</i>
         </ui-view>
@@ -61,6 +61,7 @@
     <script type="text/javascript" src="front/controllers/search.ctrl.js"></script>
     <script type="text/javascript" src="front/controllers/login.ctrl.js"></script>
     <script type="text/javascript" src="front/controllers/my.ctrl.js"></script>
+    <script type="text/javascript" src="front/controllers/profile.ctrl.js"></script>
 </body>
 
 </html>

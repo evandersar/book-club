@@ -2,7 +2,13 @@
     <a href="" class="close" onclick="$('.search-err').hide()" aria-label="close">&times;</a> {{all.errMsg}}
 </div>
 
-<div id="booksContainer" class="container-fluid">
+<div class="alert alert-success search-msg" role="alert" ng-if="all.msg" ng-cloak>
+    <a href="" class="close" onclick="$('.search-msg').hide()" aria-label="close">&times;</a> <strong>{{all.msg}}</strong> - has been requested
+</div>
+
+<div id="booksContainer" class="container-fluid" ng-cloak>
+    
+    <h2 ng-if="!all.books[0]">No books in our APP currently, <span ng-if="!all.authenticated">please <a ui-sref='login'>Login/Sign up</a> to add</span> <span ng-if="all.authenticated">but you can <a ui-sref='search'>add</a></span> a first one</h2>
 
     <div class="row" ng-cloak ng-if="all.books[0]">
         <div class="col-md-6" ng-repeat="book in all.books track by $index">
@@ -16,9 +22,11 @@
                     <h4><strong><a ng-href="{{book.link}}" target="_blank"> {{book.title}} </a></strong></h4>
                     <div><strong>Author: {{book.author}} </strong></div>
                     <div>Publisher: {{book.publisher}}</div>
-                    <div>Date: {{book.date}}, pages: {{book.pages}}.</div><br/>
-                    <button ng-if="all.user['_id'] != book.owner && all.authenticated" type="button" class="btn btn-warning butt" ng-click="">Request book</button>
-                    <button ng-if="all.user['_id'] == book.owner && all.authenticated" type="button" class="btn btn-info butt" ui-sref="my">Your book</button>
+                    <div>Date: {{book.date}}, pages: {{book.pages}}.</div>
+                    <div><em>Owner: {{book.ownerName}}</em></div>
+                    <button ng-if="all.user['name'] != book.ownerName && all.authenticated" type="button" class="btn btn-warning butt" ng-click="all.reqBook(book)">Request book</button>
+                    <button ng-if="all.user['name'] == book.ownerName && all.authenticated" type="button" class="btn btn-info butt" ui-sref="my">Your book</button>
+                    <div ng-if="!all.authenticated"><a ui-sref="login">Login / Sign up</a> to request this book</div>
                 </div>
             </div>
         </div>

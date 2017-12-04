@@ -10,7 +10,8 @@ var bookSchema = mongoose.Schema({
     publisher: String,
     date: String,
     pages: Number,
-    owner: String
+    owner: String,
+    ownerName: String
     
 });
 

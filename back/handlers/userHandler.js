@@ -19,6 +19,8 @@ function UserHandler() {
             // save the user
             newUser.save(function(err) {
                 if (err) {
+                    console.log("err => ", err);
+                    
                     return res.json({ success: false, msg: 'Username already exists.' });
                 }
                 res.json({ success: true, msg: 'Successful created new user. Now you can log in using your credentials' });
@@ -69,6 +71,31 @@ function UserHandler() {
                     res.json({ success: true, msg: 'Welcome in the member area ' + user.name + '!' });
                 }
             });
+        }
+        else {
+            return res.status(403).send({ success: false, msg: 'No token provided.' });
+        }
+    };
+
+    this.bookRequest = function(req, res) {
+        console.log('req.body => ', req.body);
+        console.log('req.params.id => ', req.params.id);
+        var token = getToken(req.headers);
+        if (token) {
+            User.findOneAndUpdate(
+                {
+                  _id: req.params.id,
+                  'tradeOut.bookId': { $ne: req.body.bookId }
+                },
+                { $push: { "tradeOut": req.body } }, 
+                { new: true },
+                (err, doc) => {
+                    console.log("err => ", err);
+                    console.log("doc => ", doc);
+                    if (err) res.status(500).send(err);
+
+                    res.json(doc);
+                });
         }
         else {
             return res.status(403).send({ success: false, msg: 'No token provided.' });

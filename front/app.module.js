@@ -68,6 +68,14 @@
                 controller: 'MyController',
                 controllerAs: 'my'
             },
+            
+            {
+                name: 'profile',
+                url: '/profile',
+                templateUrl: 'front/views/profile.html',
+                controller: 'ProfileController',
+                controllerAs: 'prfl'
+            },
 
         ];
 

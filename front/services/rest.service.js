@@ -24,13 +24,24 @@
             '/api/myitems'
         );
 
+        var User = $resource(
+            'api/user/:id', {
+                id: '@id'
+            }, {
+                "update": {
+                    method: "PUT"
+                }
+            }
+        );
+
         return {
             addItem: addItem,
             getItems: getItems,
             updateItem: updateItem,
             deleteItemById: deleteItemById,
             getMyItems: getMyItems,
-            searchItem: searchItem
+            searchItem: searchItem,
+            requestBook: requestBook
         };
 
         function addItem(ItemObj, callback, errorCallback) {
@@ -56,6 +67,20 @@
             );
         }
 
+        function requestBook(myId, book, callback, errorCallback) {
+            return User.update({
+                    id: myId
+                },
+                book,
+                function(resp) {
+                    callback(resp);
+                },
+                function(err) {
+                    errorCallback(err);
+                }
+            );
+        }
+
         function updateItem(id, voter, callback, errorCallback) {
             return Item.update({
                     id: id
@@ -71,8 +96,7 @@
         }
 
         function deleteItemById(id, callback, errorCallback) {
-            return Item.delete(
-                { id: id },
+            return Item.delete({ id: id },
                 function(resp) {
                     callback(resp);
                 },
@@ -92,7 +116,7 @@
                 }
             );
         }
-        
+
         function searchItem(title, callback, errorCallback) {
             return Item.searchitem({}, {
                     title: title
