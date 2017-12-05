@@ -47,11 +47,24 @@
         var logout = function() {
             destroyUserCredentials();
         };
-        
+
         var getPayload = function() {
             var token = window.localStorage.getItem(LOCAL_TOKEN_KEY).split(' ')[1];
-            
+
             return JSON.parse(atob(token.split('.')[1]));
+        };
+
+        var userInfo = function() {
+            return $q(function(resolve, reject) {
+                $http.get(API_ENDPOINT.url + '/userinfo').then(function(result) {
+                    if (result.data.success) {
+                        resolve(result.data.user);
+                    }
+                    else {
+                        reject(result.data.msg);
+                    }
+                });
+            });
         };
 
         loadUserCredentials();
@@ -61,7 +74,8 @@
             register: register,
             logout: logout,
             isAuthenticated: function() { return isAuthenticated; },
-            getPayload: getPayload
+            getPayload: getPayload,
+            userInfo: userInfo
         };
 
         function loadUserCredentials() {

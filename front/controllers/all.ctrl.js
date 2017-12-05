@@ -53,8 +53,8 @@
                     ownerName: book.ownerName
                 },
                 function(resp) {
-                    //console.log(resp);
-                    if (resp.tradeOut) {
+                    console.log(resp);
+                    if (resp.tradeIn) {
                         all.msg = book.title;
                     }
                     else {

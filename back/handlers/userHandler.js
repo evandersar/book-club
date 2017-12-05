@@ -20,7 +20,7 @@ function UserHandler() {
             newUser.save(function(err) {
                 if (err) {
                     console.log("err => ", err);
-                    
+
                     return res.json({ success: false, msg: 'Username already exists.' });
                 }
                 res.json({ success: true, msg: 'Successful created new user. Now you can log in using your credentials' });
@@ -68,7 +68,7 @@ function UserHandler() {
                     return res.status(403).send({ success: false, msg: 'Authentication failed. User not found.' });
                 }
                 else {
-                    res.json({ success: true, msg: 'Welcome in the member area ' + user.name + '!' });
+                    res.json({ success: true, user: user });
                 }
             });
         }
@@ -82,19 +82,41 @@ function UserHandler() {
         console.log('req.params.id => ', req.params.id);
         var token = getToken(req.headers);
         if (token) {
-            User.findOneAndUpdate(
-                {
-                  _id: req.params.id,
-                  'tradeOut.bookId': { $ne: req.body.bookId }
-                },
-                { $push: { "tradeOut": req.body } }, 
-                { new: true },
+            User.findOneAndUpdate({
+                    _id: req.params.id,
+                    'tradeOut.bookId': { $ne: req.body.bookId }
+                }, { $push: { "tradeOut": req.body } }, { new: true },
                 (err, doc) => {
                     console.log("err => ", err);
                     console.log("doc => ", doc);
-                    if (err) res.status(500).send(err);
+                    if (err) return res.status(500).send(err);
+                    //res.json(doc);
+                    
+                    if (doc) {
+                        User.findOneAndUpdate({
+                                name: req.body.ownerName
+                            }, {
+                                $push: {
+                                    "tradeIn": {
+                                        bookId: req.body.bookId,
+                                        status: req.body.status,
+                                        title: req.body.title,
+                                        author: req.body.author,
+                                        clientName: doc.name
+                                    }
+                                }
+                            }, { new: true },
+                            (err, doc) => {
+                                console.log("err => ", err);
+                                console.log("doc => ", doc);
+                                if (err) return res.status(500).send(err);
 
-                    res.json(doc);
+                                res.json(doc);
+                            });
+                    }
+                    else{
+                        res.json(doc);
+                    }
                 });
         }
         else {

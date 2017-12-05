@@ -10,7 +10,7 @@ function BookHandler() {
 
     this.getBooks = function(req, res) {
         Book.find((err, books) => {
-            if (err) res.status(500).send(err);
+            if (err) return res.status(500).send(err);
 
             res.json(books);
         });
@@ -20,7 +20,7 @@ function BookHandler() {
         var token = getToken(req.headers);
         if (token) {
             gbooks.search(req.body.title, function(err, results) {
-                if (err) res.status(500).send(err);
+                if (err) return res.status(500).send(err);
 
                 res.json(results);
             });
@@ -39,7 +39,7 @@ function BookHandler() {
 
             newBook.ownerName = decoded.name;
             newBook.save((err, book) => {
-                if (err) res.status(500).send(err);
+                if (err) return res.status(500).send(err);
 
                 //console.log("Saved book: ", book);
                 res.json(book);
@@ -55,7 +55,7 @@ function BookHandler() {
         if (token) {
             var decoded = jwt.decode(token, config.secret);
             Book.find({ ownerName: decoded.name }, (err, books) => {
-                if (err) res.status(500).send(err);
+                if (err) return res.status(500).send(err);
 
                 res.json(books);
             });
@@ -70,7 +70,7 @@ function BookHandler() {
         if (token) {
             var bookId = req.params.id;
             Book.findByIdAndRemove(bookId, (err, doc) => {
-                if (err) res.status(500).send(err);
+                if (err) return res.status(500).send(err);
 
                 res.json({ id: doc._id });
             });
