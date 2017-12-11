@@ -2,7 +2,6 @@
 var jwt = require('jwt-simple');
 var gbooks = require('google-books-search');
 
-var config = require('../config/database'); // get db config file
 var Book = require('../models/book');
 
 
@@ -34,7 +33,7 @@ function BookHandler() {
         //console.log("req.body => ", req.body);
         var token = getToken(req.headers);
         if (token) {
-            var decoded = jwt.decode(token, config.secret);
+            var decoded = jwt.decode(token, process.env.TOKEN_SECRET);
             var newBook = new Book(req.body);
 
             newBook.ownerName = decoded.name;
@@ -53,7 +52,7 @@ function BookHandler() {
     this.getMyBooks = function(req, res) {
         var token = getToken(req.headers);
         if (token) {
-            var decoded = jwt.decode(token, config.secret);
+            var decoded = jwt.decode(token, process.env.TOKEN_SECRET);
             Book.find({ ownerName: decoded.name }, (err, books) => {
                 if (err) return res.status(500).send(err);
 

@@ -1,7 +1,6 @@
 'use strict';
 var jwt = require('jwt-simple');
 
-var config = require('../config/database'); // get db config file
 var User = require('../models/user');
 
 function UserHandler() {
@@ -43,7 +42,7 @@ function UserHandler() {
                 user.comparePassword(req.body.password, function(err, isMatch) {
                     if (isMatch && !err) {
                         // if user is found and password is right create a token
-                        var token = jwt.encode(user, config.secret);
+                        var token = jwt.encode(user, process.env.TOKEN_SECRET);
                         // return the information including token as JSON
                         res.json({ success: true, token: 'JWT ' + token });
                     }
@@ -58,7 +57,7 @@ function UserHandler() {
     this.userinfo = function(req, res) {
         var token = getToken(req.headers);
         if (token) {
-            var decoded = jwt.decode(token, config.secret);
+            var decoded = jwt.decode(token, process.env.TOKEN_SECRET);
             User.findOne({
                 name: decoded.name
             }, function(err, user) {
@@ -80,7 +79,7 @@ function UserHandler() {
     this.updateUser = function(req, res) {
         var token = getToken(req.headers);
         if (token) {
-            var decoded = jwt.decode(token, config.secret);
+            var decoded = jwt.decode(token, process.env.TOKEN_SECRET);
             User.findOneAndUpdate({
                     name: decoded.name
                 }, {
@@ -157,7 +156,7 @@ function UserHandler() {
 
         var token = getToken(req.headers);
         if (token) {
-            var decoded = jwt.decode(token, config.secret);
+            var decoded = jwt.decode(token, process.env.TOKEN_SECRET);
             User.findOneAndUpdate({
                     name: decoded.name,
                     'tradeIn._id': req.body.tradeId
@@ -197,7 +196,7 @@ function UserHandler() {
 
         var token = getToken(req.headers);
         if (token) {
-            var decoded = jwt.decode(token, config.secret);
+            var decoded = jwt.decode(token, process.env.TOKEN_SECRET);
             User.findOneAndUpdate({
                     name: decoded.name,
                 }, {
