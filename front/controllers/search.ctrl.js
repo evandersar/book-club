@@ -34,7 +34,7 @@
                         if (!resp[0]) srch.errMsg = 'No data for this book or wrong book title';
                         srch.searching = false;
                         srch.books = resp;
-                        console.log("srch.books => ", srch.books);
+                        //console.log("srch.books => ", srch.books);
                     },
                     function(err) {
                         srch.searching = false;

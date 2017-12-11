@@ -42,7 +42,7 @@
                         lgn.user = {};
                         lgn.loginForm.$setPristine();
                         lgn.loginForm.$setUntouched();
-                        console.log(msg);
+                        //console.log(msg);
                         lgn.errMsg = msg;
                     },
                     function(errMsg) {

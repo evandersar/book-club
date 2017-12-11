@@ -42,7 +42,8 @@
             getMyItems: getMyItems,
             searchItem: searchItem,
             requestBook: requestBook,
-            changeStatus: changeStatus
+            changeStatus: changeStatus,
+            cancelRequest: cancelRequest
         };
 
         function addItem(ItemObj, callback, errorCallback) {
@@ -134,6 +135,18 @@
             return Item.searchitem({}, {
                     title: title
                 },
+                function(resp) {
+                    callback(resp);
+                },
+                function(err) {
+                    errorCallback(err);
+                }
+            );
+        }
+        
+        function cancelRequest(obj, callback, errorCallback) {
+            return User.update({},
+                obj,
                 function(resp) {
                     callback(resp);
                 },

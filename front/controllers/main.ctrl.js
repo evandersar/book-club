@@ -26,7 +26,7 @@
         });
         
         $scope.$on('logining', function(event, data) {
-            console.log(data);
+            //console.log(data);
             main.authenticated = AuthService.isAuthenticated();
         });
 

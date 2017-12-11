@@ -5,9 +5,9 @@
         .module('app')
         .controller('AllController', AllController);
 
-    AllController.$inject = ["restService", "AuthService", "$scope"];
+    AllController.$inject = ["restService", "AuthService", "$scope", "$anchorScroll"];
 
-    function AllController(restService, AuthService, $scope) {
+    function AllController(restService, AuthService, $scope, $anchorScroll) {
         var all = this;
 
         all.books = [];
@@ -19,7 +19,7 @@
         all.reqBook = reqBook;
 
         $scope.$on('logining', function(event, data) {
-            console.log(data);
+            //console.log(data);
             all.authenticated = AuthService.isAuthenticated();
         });
 
@@ -31,7 +31,7 @@
             restService.getItems(
                 function(resp) {
                     all.books = resp;
-                    console.log("all.books => ", all.books);
+                    //console.log("all.books => ", all.books);
                 },
                 function(err) {
                     console.log(err);
@@ -53,18 +53,20 @@
                     ownerName: book.ownerName
                 },
                 function(resp) {
-                    console.log(resp);
+                    //console.log(resp);
                     if (resp.tradeIn) {
                         all.msg = book.title;
                     }
                     else {
                         all.errMsg = `You have already requested - ${resp.title}`;
                     }
+                    $anchorScroll();
 
                 },
                 function(err) {
                     console.log(err);
                     all.errMsg = `${err.statusText} ${err.status}`;
+                    $anchorScroll();
                 }
             );
         }

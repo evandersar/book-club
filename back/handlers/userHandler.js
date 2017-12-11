@@ -29,7 +29,7 @@ function UserHandler() {
     };
 
     this.authenticate = function(req, res) {
-        console.log("req.body => ", req.body);
+        //console.log("req.body => ", req.body);
         User.findOne({
             name: req.body.name
         }, function(err, user) {
@@ -106,8 +106,8 @@ function UserHandler() {
     };
 
     this.bookRequest = function(req, res) {
-        console.log('req.body => ', req.body);
-        console.log('req.params.id => ', req.params.id);
+        //console.log('req.body => ', req.body);
+        //console.log('req.params.id => ', req.params.id);
         var token = getToken(req.headers);
         if (token) {
             User.findOneAndUpdate({
@@ -115,8 +115,8 @@ function UserHandler() {
                     'tradeOut.bookId': { $ne: req.body.bookId }
                 }, { $push: { "tradeOut": req.body } }, { new: true },
                 (err, doc) => {
-                    console.log("err => ", err);
-                    console.log("doc => ", doc);
+                    //console.log("err => ", err);
+                    //console.log("doc => ", doc);
                     if (err) return res.status(500).send(err);
                     //res.json(doc);
 
@@ -135,8 +135,8 @@ function UserHandler() {
                                 }
                             }, { new: true },
                             (err, doc) => {
-                                console.log("err => ", err);
-                                console.log("doc => ", doc);
+                                //console.log("err => ", err);
+                                //console.log("doc => ", doc);
                                 if (err) return res.status(500).send(err);
 
                                 res.json(doc);
@@ -169,7 +169,7 @@ function UserHandler() {
                     if (doc) {
                         //console.log("doc => ", doc);
                         res.json(doc);
-                        
+
                         //Update of client tradeOut status
                         User.findOneAndUpdate({
                                 name: req.body.clientName,
@@ -177,10 +177,54 @@ function UserHandler() {
                             }, { $set: { 'tradeOut.$.status': req.body.status } }, { new: true },
                             (err, doc) => {
                                 if (err) return res.status(500).send(err);
+
+                                //console.log("doc => ", doc);
+                            });
+
+                    }
+                    else {
+                        res.json(doc);
+                    }
+                });
+        }
+        else {
+            return res.status(403).send({ success: false, msg: 'No token provided.' });
+        }
+    };
+
+    this.cancelRequest = function(req, res) {
+        console.log('req.body => ', req.body);
+
+        var token = getToken(req.headers);
+        if (token) {
+            var decoded = jwt.decode(token, config.secret);
+            User.findOneAndUpdate({
+                    name: decoded.name,
+                }, {
+                    $pull: { 'tradeOut': { bookId: req.body.bookId } }
+
+                }, { new: true },
+                (err, doc) => {
+                    if (err) return res.status(500).send(err);
+                    //res.json(doc);
+
+                    if (doc) {
+                        //console.log("doc => ", doc);
+                        res.json(doc);
+
+                        //Update of owner tradeIn array
+                        User.update({
+                                name: req.body.owner,
+                            }, {
+                                $pull: { 'tradeIn': { bookId: req.body.bookId, clientName: decoded.name } }
+
+                            },
+                            (err, doc) => {
+                                if (err) return res.status(500).send(err);
                                 
                                 //console.log("doc => ", doc);
                             });
-                            
+
                     }
                     else {
                         res.json(doc);

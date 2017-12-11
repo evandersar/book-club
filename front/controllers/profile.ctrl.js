@@ -24,7 +24,7 @@
             prfl.errMsg = '';
             AuthService.userInfo().then(
                 function(user) {
-                    console.log("user => ", user);
+                    //console.log("user => ", user);
                     prfl.user = user;
                 },
                 function(errMsg) {
@@ -36,13 +36,13 @@
         function updateUser() {
             prfl.errMsg = '';
             prfl.msg = '';
-            console.log("prfl.user => ", prfl.user);
+            //console.log("prfl.user => ", prfl.user);
             AuthService.updateUser({
                 city: prfl.user.city,
                 state: prfl.user.state
             }).then(
                 function(msg) {
-                    console.log("msg => ", msg);
+                    //console.log("msg => ", msg);
                     prfl.msg = msg;
                 },
                 function(errMsg) {
@@ -52,9 +52,8 @@
         }
 
         function changeStatus(tradeIn, status) {
-            console.log("tradeIn , status =>> ", tradeIn, status);
-            restService.changeStatus(
-                {
+            //console.log("tradeIn , status =>> ", tradeIn, status);
+            restService.changeStatus({
                     tradeId: tradeIn._id,
                     bookId: tradeIn.bookId,
                     status: status,
@@ -71,8 +70,20 @@
         }
 
 
-        function cancel(bookId) {
-            console.log("bookId => ", bookId);
+        function cancel(tradeOut) {
+            //console.log("tradeOut => ", tradeOut);
+            restService.cancelRequest({
+                    owner: tradeOut.ownerName,
+                    bookId: tradeOut.bookId
+                },
+                function(resp) {
+                    //console.log("resp => ", resp);
+                    prfl.user = resp;
+                },
+                function(err) {
+                    console.log("err => ", err);
+                }
+            );
         }
 
     }

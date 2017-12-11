@@ -22,7 +22,8 @@ module.exports = function(app) {
 		.put(userHandler.updateUser, passport.authenticate('jwt', { session: false }));
 		
 	app.route('/api/user')
-		.post(userHandler.changeStatus, passport.authenticate('jwt', { session: false }));
+		.post(userHandler.changeStatus, passport.authenticate('jwt', { session: false }))
+		.put(userHandler.cancelRequest, passport.authenticate('jwt', { session: false }));
 		
 	app.route('/api/user/:id')
 		.put(userHandler.bookRequest, passport.authenticate('jwt', { session: false }));
