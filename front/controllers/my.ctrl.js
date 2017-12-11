@@ -20,7 +20,7 @@
             restService.getMyItems(
                 function(resp) {
                     my.books = resp;
-                    console.log("my.books => ", my.books);
+                    //console.log("my.books => ", my.books);
                 },
                 function(err) {
                     console.log(err);
