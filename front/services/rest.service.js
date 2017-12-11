@@ -41,7 +41,8 @@
             deleteItemById: deleteItemById,
             getMyItems: getMyItems,
             searchItem: searchItem,
-            requestBook: requestBook
+            requestBook: requestBook,
+            changeStatus: changeStatus
         };
 
         function addItem(ItemObj, callback, errorCallback) {
@@ -72,6 +73,18 @@
                     id: myId
                 },
                 book,
+                function(resp) {
+                    callback(resp);
+                },
+                function(err) {
+                    errorCallback(err);
+                }
+            );
+        }
+        
+        function changeStatus(obj, callback, errorCallback) {
+            return User.save(
+                obj,
                 function(resp) {
                     callback(resp);
                 },

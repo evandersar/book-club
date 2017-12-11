@@ -61,3 +61,15 @@ body {
     border: 1px solid #a94442;
     background-color: #f2dede;
 }
+
+td:last-child{
+    text-align: center;
+}
+
+.Accepted{
+    color: green;
+}
+
+.Declined{
+    color: red;
+}

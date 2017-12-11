@@ -77,6 +77,34 @@ function UserHandler() {
         }
     };
 
+    this.updateUser = function(req, res) {
+        var token = getToken(req.headers);
+        if (token) {
+            var decoded = jwt.decode(token, config.secret);
+            User.findOneAndUpdate({
+                    name: decoded.name
+                }, {
+                    $set: {
+                        'city': req.body.city,
+                        'state': req.body.state
+                    }
+                },
+                function(err, user) {
+                    if (err) throw err;
+
+                    if (!user) {
+                        return res.status(403).send({ success: false, msg: 'Authentication failed. User not found.' });
+                    }
+                    else {
+                        res.json({ success: true, msg: 'Your profile was successfuly updated.' });
+                    }
+                });
+        }
+        else {
+            return res.status(403).send({ success: false, msg: 'No token provided.' });
+        }
+    };
+
     this.bookRequest = function(req, res) {
         console.log('req.body => ', req.body);
         console.log('req.params.id => ', req.params.id);
@@ -91,7 +119,7 @@ function UserHandler() {
                     console.log("doc => ", doc);
                     if (err) return res.status(500).send(err);
                     //res.json(doc);
-                    
+
                     if (doc) {
                         User.findOneAndUpdate({
                                 name: req.body.ownerName
@@ -114,7 +142,47 @@ function UserHandler() {
                                 res.json(doc);
                             });
                     }
-                    else{
+                    else {
+                        res.json(doc);
+                    }
+                });
+        }
+        else {
+            return res.status(403).send({ success: false, msg: 'No token provided.' });
+        }
+    };
+
+    this.changeStatus = function(req, res) {
+        console.log('req.body => ', req.body);
+
+        var token = getToken(req.headers);
+        if (token) {
+            var decoded = jwt.decode(token, config.secret);
+            User.findOneAndUpdate({
+                    name: decoded.name,
+                    'tradeIn._id': req.body.tradeId
+                }, { $set: { 'tradeIn.$.status': req.body.status } }, { new: true },
+                (err, doc) => {
+                    if (err) return res.status(500).send(err);
+                    //res.json(doc);
+
+                    if (doc) {
+                        //console.log("doc => ", doc);
+                        res.json(doc);
+                        
+                        //Update of client tradeOut status
+                        User.findOneAndUpdate({
+                                name: req.body.clientName,
+                                'tradeOut.bookId': req.body.bookId
+                            }, { $set: { 'tradeOut.$.status': req.body.status } }, { new: true },
+                            (err, doc) => {
+                                if (err) return res.status(500).send(err);
+                                
+                                //console.log("doc => ", doc);
+                            });
+                            
+                    }
+                    else {
                         res.json(doc);
                     }
                 });

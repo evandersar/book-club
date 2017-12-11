@@ -66,6 +66,19 @@
                 });
             });
         };
+        
+        var updateUser = function(info) {
+            return $q(function(resolve, reject) {
+                $http.put(API_ENDPOINT.url + '/userinfo', info).then(function(result) {
+                    if (result.data.success) {
+                        resolve(result.data.msg);
+                    }
+                    else {
+                        reject(result.data.msg);
+                    }
+                });
+            });
+        };
 
         loadUserCredentials();
 
@@ -75,7 +88,8 @@
             logout: logout,
             isAuthenticated: function() { return isAuthenticated; },
             getPayload: getPayload,
-            userInfo: userInfo
+            userInfo: userInfo,
+            updateUser: updateUser
         };
 
         function loadUserCredentials() {

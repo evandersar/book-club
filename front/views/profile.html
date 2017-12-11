@@ -27,6 +27,10 @@
     <a href="" class="close" onclick="$('.search-err').hide()" aria-label="close">&times;</a> {{prfl.errMsg}}
 </div>
 
+<div class="alert alert-success search-msg" role="alert" ng-if="prfl.msg" ng-cloak>
+    <a href="" class="close" onclick="$('.search-msg').hide()" aria-label="close">&times;</a> {{prfl.msg}}
+</div>
+
 <hr/>
 <h3>Incoming trade requests</h3>
 <table class="table">
@@ -36,16 +40,19 @@
             <th>Status</th>
             <th>Book</th>
             <th>Customer</th>
-            <th>Action</th>
+            <th class="text-center">Action</th>
         </tr>
     </thead>
     <tbody>
         <tr style="background-color: #7dcaf1;" ng-repeat="tradeIn in prfl.user.tradeIn track by $index">
             <td>{{$index+1}}</td>
-            <td>{{tradeIn.status}}</td>
+            <td><strong ng-class="tradeIn.status">{{tradeIn.status}}</strong></td>
             <td>{{tradeIn.title}}, {{tradeIn.author}}</td>
             <td>{{tradeIn.clientName}}</td>
-            <td>accept decline</td>
+            <td>
+                <button type="button" class="btn btn-success" ng-click="prfl.changeStatus(tradeIn, 'Accepted')">Accept</button> 
+                <button type="button" class="btn btn-danger" ng-click="prfl.changeStatus(tradeIn, 'Declined')">Decline</button>
+            </td>
         </tr>
     </tbody>
 </table>
@@ -59,16 +66,16 @@
             <th>Status</th>
             <th>Book</th>
             <th>Owner</th>
-            <th>Action</th>
+            <th class="text-center">Action</th>
         </tr>
     </thead>
     <tbody>
         <tr style="background-color: #7dcaf1;" ng-repeat="tradeOut in prfl.user.tradeOut track by $index">
             <td>{{$index+1}}</td>
-            <td>{{tradeOut.status}}</td>
+            <td><strong ng-class="tradeOut.status">{{tradeOut.status}}</strong></td>
             <td>{{tradeOut.title}}, {{tradeOut.author}}</td>
             <td>{{tradeOut.ownerName}}</td>
-            <td>cancel</td>
+            <td><button type="button" class="btn btn-warning" ng-click="prfl.cancel(tradeOut.bookId)">Cancel</button></td>
         </tr>
     </tbody>
 </table>
